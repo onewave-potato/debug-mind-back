@@ -67,9 +67,20 @@ async def analyze_code(request: CodeRequest):
 async def get_dashboard(user_id: int = 1):
     """B 담당 미션: 유저 실시간 상태 및 캐릭터 외형 조회"""
     user_stats = get_user_status(user_id)
+
+    # 1번 유저가 이미 DB에 있는데도 None이 나온다면,
+    # game.py의 get_user_status 함수 내 쿼리가 잘못되었을 수 있습니다.
+    if not user_stats:
+        return {
+            "status": "error",
+            "message": f"유저(ID: {user_id})를 찾을 수 없습니다. DB를 확인해주세요.",
+        }
+
     return {
         "user_info": {
-            "nickname": user_stats["nickname"],
+            "nickname": user_stats[
+                "nickname"
+            ],  # game.py에서 github_id를 nickname으로 보냄
             "level": user_stats["level"],
             "title": user_stats["title"],
             "avatar": user_stats["avatar_url"],

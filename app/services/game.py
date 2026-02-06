@@ -101,12 +101,12 @@ def get_user_status(user_id: int):
     avatar_info = LEVEL_DATA.get(current_level, LEVEL_DATA[1])
 
     return {
-        "nickname": user["nickname"],
+        "nickname": user["github_id"],  # ✅ 'nickname' 대신 'github_id'를 사용합니다.
         "level": current_level,
-        "exp": user["exp"],
-        "title": user["title"] if user["title"] else avatar_info["title"],
+        "exp": user["current_exp"],  # ✅ 'exp' 대신 'current_exp'를 사용합니다.
+        "title": avatar_info["title"],
         "avatar_url": avatar_info["avatar"],
-        "daily_quiz_done": user["daily_quiz_done"],
-        "daily_memo_done": user["daily_memo_done"],
-        "oss_bonus_done": user["oss_bonus_done"],
+        "daily_quiz_done": False,  # 일단 기본값
+        "daily_memo_done": False,
+        "oss_bonus_done": False,
     }
