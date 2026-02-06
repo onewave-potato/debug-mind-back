@@ -47,4 +47,8 @@ jobs:
             --region ${{ env.REGION }} \
             --platform managed \
             --allow-unauthenticated \
-            --set-secrets DATABASE_URL=DATABASE_URL:latest,WEBHOOK_SECRET=WEBHOOK_SECRET:latest 
+            --vpc-connector run-connector \
+            --vpc-egress all-traffic \
+            --set-secrets DATABASE_URL=DATABASE_URL:latest,WEBHOOK_SECRET=WEBHOOK_SECRET:latest \
+            --timeout 300
+ 
