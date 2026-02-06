@@ -15,6 +15,6 @@ class CSQuiz(Base):
     __tablename__ = "cs_quizzes"
     id = Column(Integer, primary_key=True, index=True)
     question = Column(Text, nullable=False)
-    options = Column(JSON)  
+    options = Column(JSON)
     answer = Column(String(255))
     category = Column(String(50))
