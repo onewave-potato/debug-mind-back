@@ -1,0 +1,22 @@
+# 1. Python venv
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# 2. env & secrets
+.env
+*.json
+keys/
+
+# 3. git & config
+.git
+.gitignore
+.dockerignore
+.vscode/
+.idea/
+
+# 4. OS 
+.DS_Store
