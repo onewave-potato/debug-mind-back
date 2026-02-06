@@ -1,8 +1,8 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    DATABASE_URL: str
-    WEBHOOK_SECRET: str
+    GCP_PROJECT_ID: str
+    GOOGLE_APPLICATION_CREDENTIALS: str
     # Cloud SQL (PostgreSQL) 접속 정보
     DATABASE_URL: str
     
