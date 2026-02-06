@@ -3,6 +3,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
+# 앱 시작 시 Cloud SQL에 테이블이 없다면 자동 생성
+models.Base.metadata.create_all(bind=engine)
+
 # .env 파일 로드
 load_dotenv()
 
