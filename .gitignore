@@ -11,3 +11,5 @@ keys/
 
 # OS
 .DS_Store
+
+deploy.yml
