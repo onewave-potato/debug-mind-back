@@ -6,7 +6,7 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  REGION: us-central1 
+  REGION: asia-northeast3
   SERVICE_NAME: debug-mind-back
   REPOSITORY: debug-mind-repo 
 
