@@ -41,6 +41,7 @@ jobs:
             --image ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE_NAME }}:${{ github.sha }} \
             --region ${{ env.REGION }} \
             --platform managed \
+            --clear-vpc-connector \
             --allow-unauthenticated \
             --add-cloudsql-instances ${{ secrets.CLOUD_SQL_INSTANCE }} \
             --set-secrets DATABASE_URL=DATABASE_URL:latest,WEBHOOK_SECRET=WEBHOOK_SECRET:latest \
