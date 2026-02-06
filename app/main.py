@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from app.db.session import engine, Base
 from app.db import models
+from app.api.quiz import router as quiz_router
 
 # 앱 시작 시 Cloud SQL에 테이블이 없다면 자동 생성
 models.Base.metadata.create_all(bind=engine)
@@ -20,6 +21,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(quiz_router, prefix="/api/quiz", tags=["Quiz"])
 
 @app.get("/")
 def health_check():
