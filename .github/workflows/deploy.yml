@@ -43,6 +43,7 @@ jobs:
             --platform managed \
             --clear-vpc-connector \
             --allow-unauthenticated \
+            --vpc-egress private-ranges-only \
             --add-cloudsql-instances ${{ secrets.CLOUD_SQL_INSTANCE }} \
             --set-secrets DATABASE_URL=DATABASE_URL:latest,WEBHOOK_SECRET=WEBHOOK_SECRET:latest \
             --timeout 300
