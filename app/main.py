@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from app.db.session import engine, Base
 from app.db import models
 from app.api.quiz import router as quiz_router
+from app.api.memo import router as memo_router
 
 # 앱 시작 시 Cloud SQL에 테이블이 없다면 자동 생성
 models.Base.metadata.create_all(bind=engine)
@@ -23,6 +24,7 @@ app.add_middleware(
 )
 
 app.include_router(quiz_router, prefix="/api/quiz", tags=["Quiz"])
+app.include_router(memo_router, prefix="/api/memo", tags=["Memo"])
 
 @app.get("/")
 def health_check():
