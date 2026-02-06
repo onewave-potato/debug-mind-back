@@ -7,39 +7,34 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  REGION: asia-northeast3  # Artifact Registry와 Cloud Run의 리전 (서울)
+  REGION: asia-northeast3
   SERVICE_NAME: debug-mind-back
-  REPOSITORY: debug-mind-repo # Artifact Registry에 생성한 저장소 이름
+  REPOSITORY: debug-mind-repo
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 소스 코드 체크아웃
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2. Google Cloud 인증
       - id: auth
         name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      # 3. Docker 설정 및 Artifact Registry 로그인
       - name: Docker Auth
         run: |
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
-      # 4. Docker 이미지 빌드 및 푸시
       - name: Build and Push Container
         run: |
           IMAGE_NAME=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
           docker build -t $IMAGE_NAME .
           docker push $IMAGE_NAME
 
-      # 5. Cloud Run에 배포 (문법 오류 수정 버전)
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy ${{ env.SERVICE_NAME }} \
@@ -47,8 +42,6 @@ jobs:
             --region ${{ env.REGION }} \
             --platform managed \
             --allow-unauthenticated \
-            --vpc-connector run-connector-3 \
-            --vpc-egress all-traffic \
+            --add-cloudsql-instances ${{ secrets.CLOUD_SQL_INSTANCE }} \
             --set-secrets DATABASE_URL=DATABASE_URL:latest,WEBHOOK_SECRET=WEBHOOK_SECRET:latest \
             --timeout 300
- 
